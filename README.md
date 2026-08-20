@@ -1,3 +1,4 @@
+
 # envo (encoaca)
 
 [![crates.io](https://img.shields.io/badge/crates.io-v0.1.0-orange.svg)](https://crates.io/)
@@ -160,21 +161,21 @@ The codebase is modularly designed for performance, security, and maintainabilit
 
 Before pushing or pulling configurations, generate your unique cryptographic identity.
 
-```bash
-envo keygen
-```
+bash
+encoaca keygen
+
 *This generates a new Nostr keypair, securely saving your private key (`nsec`) locally and printing your public key (`npub`) to the console.*
 
 ### 2. Push Environment Variables
 
 To encrypt and upload your local environment variables to the relay network under a specific tag:
 
-```bash
-envo push my-project-production
-```
+bash
+encoaca push my-project-production
+
 
 **What happens under the hood:**
-1. `envo` scans the current directory for environment files (e.g., `.env`).
+1. `encoaca` scans the current directory for environment files (e.g., `.env`).
 2. The contents are serialized and encrypted using your Nostr keys.
 3. A signed Nostr event is constructed containing the encrypted payload, tagged with `my-project-production`.
 4. The event is broadcasted to configured Nostr relays.
@@ -186,24 +187,23 @@ To fetch, verify, and decrypt environment variables published under a tag:
 #### First-Time Pull (Trust-On-First-Use)
 When pulling a tag for the first time, you must explicitly specify the publisher's public key (`npub`) to establish trust:
 
-```bash
-envo pull my-project-production --owner npub1h8...39ax
-```
+bash
+encoaca pull my-project-production --owner npub1h8...39ax
+
 
 #### Subsequent Pulls
-Once trust is established, you no longer need to pass the `--owner` flag. `envo` remembers the trusted publisher for that tag:
+Once trust is established, you no longer need to pass the `--owner` flag. `encoaca` remembers the trusted publisher for that tag:
 
-```bash
-envo pull my-project-production
-```
+bash
+encoaca pull my-project-production
+
 
 **What happens under the hood:**
-1. `envo` queries Nostr relays for events matching the tag `my-project-production`.
+1. `encoaca` queries Nostr relays for events matching the tag `my-project-production`.
 2. It filters events to ensure they are signed by the trusted owner's `npub`.
 3. The encrypted payload is downloaded, decrypted locally using your keys, and written back to your local environment file.
 
 ---
-
 ## 🔒 Security Model
 
 `envo` is built with a strict security-first mindset:
@@ -221,21 +221,20 @@ envo pull my-project-production
 
 To run the test suite and verify cryptographic operations:
 
-```bash
+bash
 cargo test
-```
+
 
 ### Code Style & Guidelines
 
 This project adheres to standard Rust formatting guidelines. Ensure your code is formatted before submitting a pull request:
 
-```bash
+bash
 cargo fmt --all
 cargo clippy --all-targets --all-features -- -D warnings
-```
+
 
 ---
-
 ## ❓ Troubleshooting
 
 ### Common Issues
