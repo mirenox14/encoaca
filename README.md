@@ -10,7 +10,7 @@
 
 By leveraging Nostr's censorship-resistant relay network and robust cryptographic primitives, `envo` provides end-to-end encrypted (E2EE) storage and transport for your project's secrets without relying on centralized third-party secret managers like HashiCorp Vault, AWS Secrets Manager, or 1Password.
 
----
+--
 
 ## 📖 Table of Contents
 
