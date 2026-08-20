@@ -6,7 +6,7 @@
 [![Rust](https://img.shields.io/badge/rust-1.75%2B-blue.svg)](https://www.rust-lang.org
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple.svg)](https://nostr.com)
 
-`envo` (repository: `encoaca`) is a secure, decentralized utility designed to synchronize and manage environment configurations (`.env` files) across teams and machines using the **Nostr** protocol. 
+`envo` (repository: `encoaca`) is a secure, decentralized utility designed to synchronize and manage environment configurations (`. files) across teams and machines using the **Nostr** protocol. 
 
 By leveraging Nostr's censorship-resistant relay ne
 work and robust cryptographic primitives, `envo` provides end-to-end encrypted (E2EE) storage and transport for your project's secrets without relying on centralized third-party secret managers like HashiCorp Vault, AWS Secrets Manager, or 1Password.
