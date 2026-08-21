@@ -12,16 +12,13 @@
 ## ✨ Features
 
 - **Decentralized Sync**  
-  Leverages Nostr relays for distributed storage and retrieval of encrypted configuration data
+  Uses Nostr relays for distributed storage and retrieval of encrypted configuration data
 
 - **End-to-End Encryption**  
-  Uses NIP-04/NIP-44 for local encryption before transmission
-
-- **Cryptographic Trust**  
-  All updates are signed with Nostr private keys (`nsec`) and verified against trusted publishers (`npub`)
+  Leverages NIP-04/NIP-44 for local encryption before transmission
 
 - **Trust Management**  
-  Supports Trust-On-First-Use (TOFU) and explicit key verification
+  Supports Trust-On-First-Use (TOFU) and explicit key verification via Nostr public keys (`npub`)
 
 - **Minimalist CLI**  
   Simple, Unix-style commands for developers and automation
@@ -51,8 +48,8 @@ Target Machine
 ## 🛠️ Installation
 
 ```bash
-git clone https://github.com/mirenox14/encoaca.git
-cd encoaca
+git clone https://github.com/mirenox14/envo.git
+cd envo
 cargo build --release
 mv target/release/envo /usr/local/bin/
 ```
