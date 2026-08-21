@@ -10,11 +10,8 @@
 
 ## ✨ Features
 
-- **Decentralized Synchronization**  
-  Store and retrieve encrypted configuration data across Nostr relays
-
-- **End-to-End Encryption**  
-  Uses NIP-04/NIP-44 encryption to protect secrets during transmission
+- **Decentralized Sync**  
+  Store and retrieve encrypted configuration data across Nostr relays using NIP-04/NIP-44 encryption
 
 - **Trust Management**  
   Supports Trust-On-First-Use (TOFU) and explicit verification of Nostr public keys (`npub`)
@@ -35,7 +32,7 @@ mv target/release/envo /usr/local/bin/
 
 **Requirements**:
 - Rust 1.75+
-- Access to Nostr relays
+- Nostr relay access
 
 ---
 
