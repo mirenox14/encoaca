@@ -5,13 +5,13 @@
 [![Rust](https://img.shields.io/badge/rust-1.75%2B-blue.svg)](https://www.rust-lang.org)
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple.svg)](https://nostr.com)
 
-`envo` is a secure, decentralized environment configuration manager that uses the **Nostr protocol** to synchronize and manage `.env` files across teams and machines. It provides end-to-end encryption and cryptographic identity verification without relying on centralized secret managers.
+`envo` is a secure, decentralized environment configuration manager using the **Nostr protocol** to synchronize and manage `.env` files across teams and machines. It provides end-to-end encryption and cryptographic identity verification without centralized secret managers.
 
 ---
 
 ## 📚 Overview
 
-Modern workflows require secure sharing of environment configurations across machines and CI/CD pipelines. Traditional methods (Slack sharing, encrypted Git commits, or enterprise tools) are either insecure, tedious, or expensive.
+Modern workflows require secure environment configuration sharing across machines and CI/CD pipelines. Traditional methods (Slack sharing, encrypted Git, or enterprise tools) are either insecure, tedious, or expensive.
 
 `envo` solves this by using Nostr relays as a decentralized backend:
 - **Encryption-First**: Payloads are encrypted locally before transmission
