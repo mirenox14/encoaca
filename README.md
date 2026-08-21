@@ -1,27 +1,26 @@
 # envo
 
-[![crates.io](https://img.shields.io/badge/crates.io-v0.1.0-orange.svg)](https://crates.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/rust-1.75%2B-blue.svg)](https://www.rust-lang.org)
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple.svg)](https://nostr.com)
 
-`envo` is a decentralized environment configuration manager that uses the Nostr protocol for secure, encrypted synchronization of `.env` files. It eliminates centralized secret managers while ensuring cryptographic verification and end-to-end encryption.
+`envo` is a decentralized environment configuration manager that securely synchronizes `.env` files using the Nostr protocol. It provides cryptographic verification and end-to-end encryption without relying on centralized secret storage.
 
 ---
 
 ## ✨ Features
 
 - **Decentralized Sync**  
-  Uses Nostr relays for distributed storage and retrieval of encrypted configuration data
+  Store and retrieve encrypted configuration data across Nostr relays
 
 - **End-to-End Encryption**  
-  Leverages NIP-04/NIP-44 for local encryption before transmission
+  NIP-04/NIP-44 encryption ensures secrets remain private during transmission
 
 - **Trust Management**  
-  Supports Trust-On-First-Use (TOFU) and explicit key verification via Nostr public keys (`npub`)
+  Supports Trust-On-First-Use (TOFU) and explicit verification of Nostr public keys (`npub`)
 
 - **Minimalist CLI**  
-  Simple, Unix-style commands for developers and automation
+  Simple command set for developers and automation workflows
 
 ---
 
@@ -29,7 +28,7 @@
 
 ```
 Local Machine
- └── Encrypts .env with Nostr keys
+ └── Encrypts .env with recipient's npub
  └── Signs payload with nsec
  └── Publishes to Nostr relays
 
@@ -40,7 +39,7 @@ Target Machine
 ```
 
 **Core Components**:
-- CLI interface for command routing and error handling
+- CLI interface for command execution
 - Nostr integration for event signing, encryption, and relay communication
 
 ---
@@ -56,7 +55,7 @@ mv target/release/envo /usr/local/bin/
 
 **Requirements**:
 - Rust 1.75+
-- Nostr relay access
+- Access to Nostr relays
 
 ---
 
