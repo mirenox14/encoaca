@@ -12,16 +12,16 @@
 ## ✨ Features
 
 - **Decentralized Sync**  
-  Leverages Nostr relays for distributed storage and retrieval of encrypted configuration data
+  Uses Nostr relays for distributed storage and retrieval of encrypted configuration data
 
 - **End-to-End Encryption**  
-  Uses NIP-04/NIP-44 for local encryption before transmission
+  Leverages NIP-04/NIP-44 for local encryption before transmission
 
 - **Cryptographic Trust**  
   All updates are signed with Nostr private keys (`nsec`) and verified against trusted publishers (`npub`)
 
-- **Trust Verification**  
-  Supports Trust-On-First-Use (TOFU) and explicit key trust management
+- **Trust Management**  
+  Supports Trust-On-First-Use (TOFU) and explicit key trust verification
 
 - **Minimalist CLI**  
   Simple, Unix-style commands for developers and automation
