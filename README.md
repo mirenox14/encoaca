@@ -4,20 +4,20 @@
 [![Rust](https://img.shields.io/badge/rust-1.75%2B-blue.svg)](https://www.rust-lang.org)
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple.svg)](https://nostr.com)
 
-`envo` is a secure, decentralized environment configuration manager that uses the Nostr protocol to synchronize encrypted `.env` files between systems. It eliminates centralized secret storage while maintaining cryptographic verification and end-to-end encryption.
+`envo` is a decentralized environment configuration manager that uses the Nostr protocol to synchronize encrypted `.env` files between systems. It provides cryptographic verification and end-to-end encryption without centralized secret storage.
 
 ---
 
 ## ✨ Features
 
 - **Decentralized Sync**  
-  Store and retrieve encrypted configuration data across Nostr relays using NIP-04/NIP-44 encryption
+  Store and retrieve encrypted configuration data using Nostr relays with NIP-04/NIP-44 encryption
 
 - **Trust Management**  
   Supports Trust-On-First-Use (TOFU) and explicit verification of Nostr public keys (`npub`)
 
-- **Minimalist CLI**  
-  Simple command set for developers and automation workflows
+- **Simple CLI Interface**  
+  Minimal command set for developers and automation workflows
 
 ---
 
@@ -32,7 +32,7 @@ mv target/release/envo /usr/local/bin/
 
 **Requirements**:
 - Rust 1.75+
-- Nostr relay access
+- Access to Nostr relays
 
 ---
 
@@ -61,7 +61,7 @@ envo pull <tag>  # Verifies against ~/.config/envo/trusted_owners.json
 
 ---
 
-## 🔐 Security Model
+## 🔐 Security
 
 - Secrets remain encrypted during transmission and storage
 - Events include timestamps and unique IDs for replay protection
