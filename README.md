@@ -5,44 +5,30 @@
 [![Rust](https://img.shields.io/badge/rust-1.75%2B-blue.svg)](https://www.rust-lang.org)
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple.svg)](https://nostr.com)
 
-`envo` is a secure, decentralized environment configuration manager using the **Nostr protocol** to synchronize and manage `.env` files across teams and machines. It provides end-to-end encryption and cryptographic identity verification without centralized secret managers.
+`envo` is a decentralized environment configuration manager that uses the Nostr protocol for secure, encrypted synchronization of `.env` files across teams and machines. It eliminates the need for centralized secret managers while ensuring cryptographic verification and end-to-end encryption.
 
 ---
 
-## 📚 Overview
-
-Modern workflows require secure environment configuration sharing across machines and CI/CD pipelines. Traditional methods (Slack sharing, encrypted Git, or enterprise tools) are either insecure, tedious, or expensive.
-
-`envo` solves this by using Nostr relays as a decentralized backend:
-- **Encryption-First**: Payloads are encrypted locally before transmission
-- **Cryptographic Identity**: Updates are signed with Nostr keys (`nsec`)
-- **Trust Model**: Uses Trust-On-First-Use (TOFU) for publisher verification
-
----
-
-## ✨ Features
+## 🔐 Core Features
 
 - **Decentralized Sync**  
-  No central database required - uses standard Nostr relays
+  Leverages Nostr relays for distributed storage and retrieval
 
-- **End-to-End Encryption (E2EE)**  
-  Industry-standard encryption before transmission
+- **End-to-End Encryption**  
+  Secrets are encrypted locally before transmission using NIP-04/NIP-44
 
-- **Cryptographic Signatures**  
-  All updates are signed to prevent tampering
+- **Cryptographic Trust**  
+  All updates are signed with Nostr private keys (`nsec`) and verified against trusted publishers (`npub`)
 
-- **Trust Verification**  
-  Bind configuration tags to trusted publisher keys (`npub`)
+- **Trust-On-First-Use (TOFU)**  
+  Establishes trust through initial manual verification of publisher keys
 
-- **Simple CLI**  
-  Intuitive commands for developers and CI/CD pipelines
-
-- **Zero-Noise Output**  
-  Clean terminal output compatible with Unix pipes
+- **Minimalist CLI**  
+  Simple, Unix-friendly commands for developers and automation
 
 ---
 
-## 🧠 Architecture
+## 🧱 Architecture
 
 ```
 Local Machine
@@ -58,29 +44,12 @@ Target Machine
 
 Key components:
 - **CLI**: Command routing and error handling
-- **Nostr Integration**: Event signing, encryption, relay communication
-- **Trust Store**: Local database of trusted `tag -> npub` mappings
+- **Nostr Integration**: Event signing, encryption, and relay communication
+- **Trust Store**: Local database mapping configuration tags to trusted `npub` keys
 
 ---
 
-## 🛠️ Tech Stack
-
-- **Language**: Rust (Edition 2021)
-- **Async Runtime**: Tokio
-- **CLI Parser**: Clap v4
-- **Protocol**: Nostr (NIP-04/NIP-44 compliant)
-- **Cryptography**: Rust-native cryptographic primitives
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Rust toolchain (v1.75+)
-- Internet access to Nostr relays
-
-### Installation
+## 🛠️ Installation
 
 ```bash
 git clone https://github.com/mirenox14/encoaca.git
@@ -89,10 +58,9 @@ cargo build --release
 mv target/release/envo /usr/local/bin/
 ```
 
-### Configuration Files
-
-- **Private Key**: `~/.config/envo/secret.json` (stores `nsec`)
-- **Trusted Publishers**: `~/.config/envo/trusted_owners.json`
+**Requirements**:
+- Rust toolchain (v1.75+)
+- Internet access to Nostr relays
 
 ---
 
@@ -104,7 +72,7 @@ mv target/release/envo /usr/local/bin/
 envo keygen
 ```
 
-Generates a Nostr keypair and stores the private key locally.
+Creates a Nostr keypair and stores the private key (`nsec`) in `~/.config/envo/secret.json`.
 
 ### 2. Push Configuration
 
@@ -112,34 +80,33 @@ Generates a Nostr keypair and stores the private key locally.
 envo push my-project-production
 ```
 
-1. Scans for `.env` files
-2. Encrypts with your Nostr keys
-3. Publishes signed event with tag `my-project-production`
+- Encrypts `.env` files using your Nostr keys
+- Publishes a signed event with the tag `my-project-production`
 
 ### 3. Pull Configuration
 
-**First-time use** (establish trust):
+**Initial trust setup**:
 ```bash
 envo pull my-project-production --owner npub1h8...39ax
 ```
 
-**Subsequent pulls** (trusted publisher):
+**Trusted publisher**:
 ```bash
 envo pull my-project-production
 ```
 
-1. Queries relays for events with matching tag
-2. Verifies signature against trusted `npub`
-3. Decrypts and writes to local `.env`
+- Fetches events with the specified tag
+- Verifies signatures against trusted `npub` in `~/.config/envo/trusted_owners.json`
+- Decrypts and writes `.env` files to the current directory
 
 ---
 
 ## 🔒 Security Model
 
-- **Zero Plaintext Exposure**: No secrets transmitted in plaintext
-- **Immutable Events**: Nostr signatures prevent tampering
-- **Replay Protection**: Events include timestamps and unique IDs
-- **Local Decryption**: Secrets are only decrypted on target machine
+- Secrets remain encrypted during transmission and storage
+- Events include timestamps and unique IDs for replay protection
+- Decryption only occurs on the target machine
+- Trust is enforced through verified `npub` keys
 
 ---
 
@@ -150,20 +117,6 @@ cargo test          # Run test suite
 cargo fmt --all     # Format code
 cargo clippy        # Lint checks
 ```
-
----
-
-## ❓ Troubleshooting
-
-### Relay Connection Issues
-
-- **Cause**: Default relays may be offline or rate-limiting
-- **Solution**: Future versions will support custom relay configuration
-
-### Untrusted Publisher Signature
-
-- **Cause**: Event signed by unexpected key
-- **Solution**: Use `--owner <npub>` to override trust or update trust store
 
 ---
 
