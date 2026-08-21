@@ -9,26 +9,26 @@
 
 ---
 
-## 🔐 Core Features
+## ✨ Features
 
 - **Decentralized Sync**  
-  Leverages Nostr relays for distributed storage and retrieval
+  Leverages Nostr relays for distributed storage and retrieval of encrypted configuration data
 
 - **End-to-End Encryption**  
-  Secrets are encrypted locally before transmission using NIP-04/NIP-44
+  Uses NIP-04/NIP-44 for local encryption before transmission
 
 - **Cryptographic Trust**  
   All updates are signed with Nostr private keys (`nsec`) and verified against trusted publishers (`npub`)
 
-- **Trust-On-First-Use (TOFU)**  
-  Establishes trust through initial manual verification of publisher keys
+- **Trust Verification**  
+  Supports Trust-On-First-Use (TOFU) and explicit key trust management
 
 - **Minimalist CLI**  
-  Simple, Unix-friendly commands for developers and automation
+  Simple, Unix-style commands for developers and automation
 
 ---
 
-## 🧱 Architecture
+## 🧠 Architecture
 
 ```
 Local Machine
@@ -42,10 +42,10 @@ Target Machine
  └── Decrypts and writes .env
 ```
 
-Key components:
-- **CLI**: Command routing and error handling
-- **Nostr Integration**: Event signing, encryption, and relay communication
-- **Trust Store**: Local database mapping configuration tags to trusted `npub` keys
+**Core Components**:
+- CLI interface for command routing and error handling
+- Nostr integration for event signing, encryption, and relay communication
+- Trust store for mapping configuration tags to verified `npub` keys
 
 ---
 
@@ -59,63 +59,51 @@ mv target/release/envo /usr/local/bin/
 ```
 
 **Requirements**:
-- Rust toolchain (v1.75+)
-- Internet access to Nostr relays
+- Rust 1.75+
+- Nostr relay access
 
 ---
 
-## 📖 Usage
+## 📚 Usage
 
-### 1. Generate Identity Keys
-
+### Key Management
 ```bash
-envo keygen
+envo keygen      # Generate Nostr keypair (stores nsec in ~/.config/envo/secret.json)
 ```
 
-Creates a Nostr keypair and stores the private key (`nsec`) in `~/.config/envo/secret.json`.
+### Configuration Sync
 
-### 2. Push Configuration
-
+**Push**:
 ```bash
-envo push my-project-production
+envo push <tag>  # Encrypts .env and publishes signed event with specified tag
 ```
 
-- Encrypts `.env` files using your Nostr keys
-- Publishes a signed event with the tag `my-project-production`
-
-### 3. Pull Configuration
-
-**Initial trust setup**:
+**Pull**:
 ```bash
-envo pull my-project-production --owner npub1h8...39ax
-```
+# Initial trust setup
+envo pull <tag> --owner <npub>
 
-**Trusted publisher**:
-```bash
-envo pull my-project-production
+# With trusted publisher
+envo pull <tag>  # Verifies against ~/.config/envo/trusted_owners.json
 ```
-
-- Fetches events with the specified tag
-- Verifies signatures against trusted `npub` in `~/.config/envo/trusted_owners.json`
-- Decrypts and writes `.env` files to the current directory
 
 ---
 
-## 🔒 Security Model
+## 🔐 Security Model
 
 - Secrets remain encrypted during transmission and storage
 - Events include timestamps and unique IDs for replay protection
 - Decryption only occurs on the target machine
-- Trust is enforced through verified `npub` keys
+- Trust enforced through verified `npub` keys
 
 ---
 
 ## 🧪 Development
 
 ```bash
-cargo test          # Run test suite
-cargo fmt --all     # Format code
-cargo clippy        # Lint checks
+cargo test    # Run test suite
+cargo fmt     # Format code
+cargo clippy  # Lint checks
 ```
 
 ---
