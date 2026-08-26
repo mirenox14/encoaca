@@ -14,6 +14,8 @@ The repository is structured as a lightweight Rust application:
 *   **`push.rs`**: Encrypts and publishes `.env` secrets under a tag for specified recipient public keys.
 *   **`helper.rs`**: Contains shared utility functions and helper methods used throughout the codebase.
 *   **`tests.rs`**: Contains unit and integration tests to ensure the reliability of the application's components.
+*   **`install.sh`**: Shell script for installing the application on Unix-like systems.
+*   **`install.ps1`**: PowerShell script for installing the application on Windows.
 ## Prerequisites
 
 To build and run this project, you need to have the Rust toolchain installed on your system. If you do not have it installed, you can set it up via [rustup](https://rustup.rs/):
