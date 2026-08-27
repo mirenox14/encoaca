@@ -1,3 +1,4 @@
+
 # encoaca
 
 `encoaca` is a Rust-based command-line tool designed to interact with the Nostr protocol. It provides utilities for Nostr key generation, publishing events to Nostr relays, and fetching data from the Nostr network.
@@ -81,13 +82,20 @@ cargo test
 ## Project Structure
 
 ```
-├── main.rs        # CLI entry point and argument parsing
-├── nostr.rs       # Nostr protocol implementation and relay handler
-├── key_gen.rs     # Key pair generation module
-├── push.rs        # Logic for publishing data to Nostr relays
-├── pull.rs        # Logic for retrieving data from Nostr relays
-├── helper.rs      # Common utilities and helper functions
-├── tests.rs       # Unit and integration tests
-├── install.sh     # Shell installer for Unix-like systems
-└── install.ps1    # PowerShell installer for Windows
+├── main.rs            # CLI entry point and argument parsing
+├── nostr.rs           # Nostr protocol implementation and relay handler
+├── key_gen.rs         # Key pair generation module
+├── key_valid.rs       # Key validation and identity directory management
+├── push.rs            # Logic for publishing data to Nostr relays
+├── pull.rs            # Logic for retrieving data from Nostr relays
+├── env_files.rs       # Environment file parsing and recipient key loader
+├── event_content.rs   # Event payload and recipient mappings
+├── helper.rs          # Common utilities and helper functions
+├── log.rs             # Terminal logging and status output
+├── relay_provider.rs # Default Nostr relay provider
+├── secret_file.rs     # File permission enforcement and secret file storage
+├── trusted_owners.rs  # Trusted owner pinning for pull validation
+├── tests.rs           # Unit and integration tests
+├── install.sh         # Shell installer for Unix-like systems
+└── install.ps1        # PowerShell installer for Windows
 ```
