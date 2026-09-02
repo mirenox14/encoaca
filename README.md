@@ -1,15 +1,15 @@
 # envo
 
-A command-line tool for securely sharing environment variables using Nostr's decentralized network and NIP-44 encryption. Encrypt secrets for specific recipients, publish to Nostr relays, and decrypt them on authorized machines.
+A command-line tool for securely sharing environment variables using Nostr's NIP-44 encryption. Encrypt secrets for specific recipients, publish to decentralized Nostr relays, and decrypt on authorized machines.
 
 ---
 
 ## Key Features
 
-- **NIP-44 Encryption**: End-to-end encryption for `.env` files using Nostr's standard encryption protocol
-- **Decentralized Distribution**: Publish and fetch encrypted secrets via public Nostr relays without central servers
-- **Owner Verification**: Trust-based system using `~/.envo/trusted_owners.json` to prevent unauthorized updates
-- **Secure Key Management**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)
+- **NIP-44 Encryption**: End-to-end encryption for `.env` files using Nostr's standard protocol
+- **Decentralized Sharing**: Publish and fetch secrets via public Nostr relays without central servers
+- **Trust-Based Verification**: Prevent unauthorized updates with `~/.envo/trusted_owners.json`
+- **Secure Key Storage**: Stores Nostr keypairs in `~/.envo/keys.json` with 0600/0700 permissions
 
 ---
 
@@ -19,8 +19,7 @@ A command-line tool for securely sharing environment variables using Nostr's dec
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kaihere14/climenv/main/install.sh | sh
 ```
-
-*Optional:*
+*Optional environment variables:*
 - `ENVO_VERSION`: Specify release version
 - `ENVO_INSTALL_DIR`: Set custom installation path (default: `$HOME/.local/bin`)
 
@@ -50,8 +49,8 @@ Creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`np
 
 Example `.env-share`:
 ```
-npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
-npub1yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+npub1[pubkey1],
+npub1[pubkey2]
 ```
 
 ---
@@ -77,10 +76,10 @@ Decrypts secrets published under the specified tag. First-time use requires `--o
 
 Example:
 ```sh
-envo pull my-project-staging --owner npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+envo pull my-project-staging --owner npub1[owner-pubkey]
 ```
 
-Subsequent pulls for the same tag don't need `--owner` after initial verification.
+> **Note**: Subsequent pulls for the same tag don't require `--owner` after initial verification.
 
 ---
 
