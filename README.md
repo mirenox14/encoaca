@@ -6,11 +6,10 @@ A command-line tool for securely sharing environment variables using [Nostr](htt
 
 ## Key Features
 
-- **End-to-End Encryption**: Uses NIP-44 to encrypt `.env` files for specified recipients  
+- **End-to-End Encryption**: NIP-44 encrypts `.env` files for specified recipients  
 - **Decentralized Network**: Publishes and retrieves secrets via public Nostr relays (no central servers)  
-- **Trust Verification**: Requires explicit trust verification for first-time secret pulls  
-- **Secure Key Management**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)  
-- **Trusted Owners**: Maintains a global `~/.envo/trusted_owners.json` mapping tags to verified owners  
+- **Trust Management**: Requires explicit trust verification for first-time secret pulls, with global trust mapping  
+- **Secure Key Storage**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)  
 
 ---
 
@@ -79,7 +78,7 @@ Example:
 envo pull my-project-staging --owner npub1xyz...
 ```
 
-> **Note**: Subsequent pulls for the same tag do not require `--owner` after initial verification.
+*Subsequent pulls for the same tag do not require `--owner` after initial verification.*
 
 ---
 
