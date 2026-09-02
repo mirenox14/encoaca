@@ -1,15 +1,16 @@
 # envo
 
-A command-line tool for securely sharing environment variables using Nostr's NIP-44 encryption. Encrypt secrets for specific recipients, publish to decentralized Nostr relays, and decrypt on authorized machines.
+A command-line tool for securely sharing environment variables using [Nostr](https://nostr.com)'s [NIP-44](https://github.com/nostr-protocol/nips/blob/master/44.md) encryption. Encrypt secrets for specific recipients, publish to decentralized Nostr relays, and decrypt on authorized machines.
 
 ---
 
 ## Key Features
 
-- **NIP-44 Encryption**: End-to-end encryption for `.env` files using Nostr's standard protocol
-- **Decentralized Sharing**: Publish and fetch secrets via public Nostr relays without central servers
-- **Trust-Based Verification**: Prevent unauthorized updates with `~/.envo/trusted_owners.json`
-- **Secure Key Storage**: Stores Nostr keypairs in `~/.envo/keys.json` with 0600/0700 permissions
+- **End-to-End Encryption**: Uses NIP-44 to encrypt `.env` files for specified recipients  
+- **Decentralized Network**: Publishes and retrieves secrets via public Nostr relays (no central servers)  
+- **Trust Verification**: Requires explicit trust verification for first-time secret pulls  
+- **Secure Key Management**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)  
+- **Trusted Owners**: Maintains a global `~/.envo/trusted_owners.json` mapping tags to verified owners  
 
 ---
 
@@ -20,8 +21,8 @@ A command-line tool for securely sharing environment variables using Nostr's NIP
 curl -fsSL https://raw.githubusercontent.com/kaihere14/climenv/main/install.sh | sh
 ```
 *Optional environment variables:*
-- `ENVO_VERSION`: Specify release version
-- `ENVO_INSTALL_DIR`: Set custom installation path (default: `$HOME/.local/bin`)
+- `ENVO_VERSION`: Specify a release version
+- `ENVO_INSTALL_DIR`: Set a custom installation path (default: `$HOME/.local/bin`)
 
 ### Windows
 ```powershell
@@ -41,16 +42,15 @@ cargo install --git https://github.com/kaihere14/climenv
 ```sh
 envo keygen
 ```
-Creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`npub...`).
+This creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`npub...`).
 
-2. **Prepare Files**
-- `.env`: Secret key-value pairs
-- `.env-share`: Comma-separated list of recipient public keys (npub/hex)
+2. **Prepare Project Files**
+- `.env`: Secret key-value pairs (e.g., `API_KEY=abc123`)
+- `.env-share`: Comma-separated list of recipient public keys (npub/hex format)
 
 Example `.env-share`:
 ```
-npub1[pubkey1],
-npub1[pubkey2]
+npub1abcde...,npub1fghij...
 ```
 
 ---
@@ -76,22 +76,22 @@ Decrypts secrets published under the specified tag. First-time use requires `--o
 
 Example:
 ```sh
-envo pull my-project-staging --owner npub1[owner-pubkey]
+envo pull my-project-staging --owner npub1xyz...
 ```
 
-> **Note**: Subsequent pulls for the same tag don't require `--owner` after initial verification.
+> **Note**: Subsequent pulls for the same tag do not require `--owner` after initial verification.
 
 ---
 
 ## File Structure
 
-- **Project Files**
-  - `.env`: Secrets to share
-  - `.env-share`: Authorized recipients list
+### Project Files
+- `.env`: Secrets to share
+- `.env-share`: Recipient public keys list
 
-- **Global Configuration**
-  - `~/.envo/keys.json`: Nostr keypair storage
-  - `~/.envo/trusted_owners.json`: Tag-to-owner trust mapping
+### Global Configuration
+- `~/.envo/keys.json`: Nostr keypair storage
+- `~/.envo/trusted_owners.json`: Tag-to-owner trust mapping
 
 ---
 
