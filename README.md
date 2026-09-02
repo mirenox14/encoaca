@@ -1,15 +1,15 @@
 # envo
 
-A command-line tool for securely sharing environment variables using [Nostr](https://nostr.com) and [NIP-44](https://github.com/nostr-protocol/nips/blob/master/44.md) encryption. Encrypt secrets for specific recipients, publish to decentralized relays, and decrypt on authorized machines.
+A command-line tool for secure, decentralized environment variable sharing using [Nostr](https://nostr.com) and [NIP-44](https://github.com/nostr-protocol/nips/blob/master/44.md) encryption. Encrypt secrets for specific recipients, publish to relays, and decrypt on authorized machines with trust-based access control.
 
 ---
 
 ## Key Features
 
-- **End-to-end encryption**: NIP-44 secures `.env` files for specified recipients  
-- **Decentralized sharing**: Publish and retrieve secrets via public Nostr relays  
-- **Trust-based access**: First-time decryption requires explicit owner verification  
-- **Secure storage**: Key files use strict 0600/0700 permissions  
+- **NIP-44 Encryption**: End-to-end encryption for `.env` files with recipient-specific keys  
+- **Decentralized Storage**: Publish and retrieve secrets via public Nostr relays  
+- **Trust-Based Access**: First-time decryption requires explicit owner verification  
+- **Secure File Permissions**: Key files use 0600/0700 permissions by default  
 
 ---
 
@@ -19,7 +19,7 @@ A command-line tool for securely sharing environment variables using [Nostr](htt
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kaihere14/climenv/main/install.sh | sh
 ```
-*Optional:*
+*Optional parameters:*
 - `ENVO_VERSION`: Specify a release version
 - `ENVO_INSTALL_DIR`: Set custom path (default: `$HOME/.local/bin`)
 
@@ -101,6 +101,6 @@ Events are published to and fetched from:
 
 ## Security
 
-- **Key storage**: All key files use strict 0600/0700 permissions  
-- **Trust verification**: Prevents unauthorized decryption via explicit owner mapping  
-- **Network security**: Secrets are encrypted using NIP-44 before transmission
+- **Key Storage**: All key files use strict 0600/0700 permissions  
+- **Trust Verification**: Prevents unauthorized decryption via explicit owner mapping  
+- **Network Security**: Secrets are encrypted using NIP-44 before transmission
