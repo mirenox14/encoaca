@@ -6,10 +6,10 @@ A command-line tool for securely sharing environment variables using [Nostr](htt
 
 ## Key Features
 
-- End-to-end encryption via NIP-44 for `.env` files  
-- Decentralized secret sharing through public Nostr relays  
-- Trust-based verification for first-time secret retrieval  
-- Secure key storage with strict file permissions  
+- **End-to-end encryption**: NIP-44 secures `.env` files for specified recipients  
+- **Decentralized sharing**: Publish and retrieve secrets via public Nostr relays  
+- **Trust-based access**: First-time decryption requires explicit owner verification  
+- **Secure storage**: Key files use strict 0600/0700 permissions  
 
 ---
 
@@ -19,9 +19,9 @@ A command-line tool for securely sharing environment variables using [Nostr](htt
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kaihere14/climenv/main/install.sh | sh
 ```
-*Optional environment variables:*
+*Optional:*
 - `ENVO_VERSION`: Specify a release version
-- `ENVO_INSTALL_DIR`: Set a custom installation path (default: `$HOME/.local/bin`)
+- `ENVO_INSTALL_DIR`: Set custom path (default: `$HOME/.local/bin`)
 
 ### Windows
 ```powershell
@@ -35,28 +35,24 @@ cargo install --git https://github.com/kaihere14/climenv
 
 ---
 
-## Getting Started
+## Usage
 
-1. **Generate Identity**
+### 1. Generate Identity
 ```sh
 envo keygen
 ```
-This creates a Nostr keypair in `~/.envo/keys.json` (chmod 0600) and displays your public key (`npub...`).
+Creates a Nostr keypair in `~/.envo/keys.json` (0600 permissions) and displays your public key (`npub...`).
 
-2. **Prepare Project Files**
+### 2. Prepare Project Files
 - `.env`: Secret key-value pairs (e.g., `API_KEY=abc123`)
-- `.env-share`: Comma-separated recipient public keys (npub/hex format)
+- `.env-share`: Comma-separated recipient keys (npub/hex format)
 
 Example `.env-share`:
 ```text
 npub1abcde...,npub1fghij...
 ```
 
----
-
-## Usage
-
-### Push Secrets
+### 3. Push Secrets
 ```sh
 envo push <tag>
 ```
@@ -67,18 +63,18 @@ Example:
 envo push my-project-staging
 ```
 
-### Pull Secrets
+### 4. Pull Secrets
 ```sh
 envo pull <tag> --owner <owner-npub>
 ```
-Decrypts secrets published under the specified tag. First-time use requires `--owner` to establish trust mapping in `~/.envo/trusted_owners.json`.
+Decrypts secrets under the specified tag. First-time use requires `--owner` to establish trust in `~/.envo/trusted_owners.json`.
 
 Example:
 ```sh
 envo pull my-project-staging --owner npub1xyz...
 ```
 
-*Subsequent pulls for the same tag will automatically use the stored trust mapping.*
+Subsequent pulls for the same tag use stored trust mappings automatically.
 
 ---
 
@@ -87,14 +83,14 @@ envo pull my-project-staging --owner npub1xyz...
 ### File Structure
 - **Project Files**  
   - `.env`: Secrets to share  
-  - `.env-share`: Recipient public keys list  
+  - `.env-share`: Recipient public keys  
 
 - **Global Configuration**  
-  - `~/.envo/keys.json`: Nostr keypair storage (chmod 0600)  
-  - `~/.envo/trusted_owners.json`: Tag-to-owner trust mapping  
+  - `~/.envo/keys.json`: Nostr keypair (0600)  
+  - `~/.envo/trusted_owners.json`: Tag-to-owner trust mappings  
 
 ### Default Relays
-Events are published to and fetched from these relays by default:
+Events are published to and fetched from:
 - `wss://relay.damus.io`
 - `wss://nos.lol`
 - `wss://purplepag.es`
@@ -105,6 +101,6 @@ Events are published to and fetched from these relays by default:
 
 ## Security
 
-- All Nostr keypairs are stored with strict file permissions (0600/0700)  
-- Trust verification prevents unauthorized secret access  
-- Secrets are encrypted using NIP-44 before network transmission
+- **Key storage**: All key files use strict 0600/0700 permissions  
+- **Trust verification**: Prevents unauthorized decryption via explicit owner mapping  
+- **Network security**: Secrets are encrypted using NIP-44 before transmission
