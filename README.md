@@ -6,10 +6,10 @@ A command-line tool for securely sharing environment variables using [Nostr](htt
 
 ## Key Features
 
-- **End-to-End Encryption**: NIP-44 encrypts `.env` files for specified recipients  
+- **NIP-44 Encryption**: End-to-end encryption of `.env` files for specified recipients  
 - **Decentralized Network**: Publishes and retrieves secrets via public Nostr relays (no central servers)  
-- **Trust Management**: Requires explicit trust verification for first-time secret pulls, with global trust mapping  
-- **Secure Key Storage**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)  
+- **Trust Verification**: Requires explicit trust verification for first-time secret pulls with global trust mapping  
+- **Secure Key Management**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)  
 
 ---
 
@@ -41,7 +41,7 @@ cargo install --git https://github.com/kaihere14/climenv
 ```sh
 envo keygen
 ```
-This creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`npub...`).
+Creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`npub...`).
 
 2. **Prepare Project Files**
 - `.env`: Secret key-value pairs (e.g., `API_KEY=abc123`)
