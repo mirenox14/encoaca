@@ -1,46 +1,35 @@
 # envo
 
-`envo` is a command-line tool for securely sharing environment variables across teams and devices using decentralised Nostr relays and NIP-44 end-to-end encryption.
-
-With `envo`, you can encrypt your local `.env` file for a set of trusted Nostr public keys, publish it under a tag, and pull it on any authorized machine.
+A command-line tool for securely sharing environment variables using Nostr's decentralized network and NIP-44 encryption. Encrypt secrets for specific recipients, publish to Nostr relays, and decrypt them on authorized machines.
 
 ---
 
-## Features
+## Key Features
 
-- **End-to-End Encryption**: Encrypts secret environment files using Nostr NIP-44 encryption so only intended recipients can read them.
-- **Decentralized Relay Support**: Publishes and fetches encrypted payloads through public Nostr relays without requiring a centralized server.
-- **Owner Pinning**: Remembers trusted publisher public keys per tag in `~/.envo/trusted_owners.json` to prevent impersonation or untrusted updates.
-- **Secure Key Storage**: Manages Nostr keypairs in `~/.envo/keys.json` with owner-only filesystem permissions (`0600`/`0700` on Unix).
+- **NIP-44 Encryption**: End-to-end encryption for `.env` files using Nostr's standard encryption protocol
+- **Decentralized Distribution**: Publish and fetch encrypted secrets via public Nostr relays without central servers
+- **Owner Verification**: Trust-based system using `~/.envo/trusted_owners.json` to prevent unauthorized updates
+- **Secure Key Management**: Stores Nostr keypairs in `~/.envo/keys.json` with strict file permissions (0600/0700)
 
 ---
 
 ## Installation
 
-### Unix (Linux & macOS)
-
-Install using the shell installer:
-
+### Unix (Linux/macOS)
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kaihere14/climenv/main/install.sh | sh
 ```
 
-*Optional Environment Variables:*
-- `ENVO_VERSION`: Specific release tag to install (defaults to `latest`).
-- `ENVO_INSTALL_DIR`: Target installation directory (defaults to `$HOME/.local/bin`).
+*Optional:*
+- `ENVO_VERSION`: Specify release version
+- `ENVO_INSTALL_DIR`: Set custom installation path (default: `$HOME/.local/bin`)
 
 ### Windows
-
-Install using PowerShell:
-
 ```powershell
 irm https://raw.githubusercontent.com/kaihere14/climenv/main/install.ps1 | iex
 ```
 
 ### From Source
-
-If you have Rust and `cargo` installed:
-
 ```sh
 cargo install --git https://github.com/kaihere14/climenv
 ```
@@ -49,91 +38,67 @@ cargo install --git https://github.com/kaihere14/climenv
 
 ## Getting Started
 
-### 1. Generate an Identity
-
-Before pushing or pulling secrets, create or inspect your local Nostr identity:
-
+1. **Generate Identity**
 ```sh
 envo keygen
 ```
+Creates a Nostr keypair in `~/.envo/keys.json` and displays your public key (`npub...`).
 
-This creates a keypair saved at `~/.envo/keys.json` if one does not already exist, and prints your public key (`npub...`). Share your public key with team members so they can authorize you in their `.env-share` files.
+2. **Prepare Files**
+- `.env`: Secret key-value pairs
+- `.env-share`: Comma-separated list of recipient public keys (npub/hex)
+
+Example `.env-share`:
+```
+npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
+npub1yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+```
 
 ---
 
 ## Usage
 
-### Pushing Secrets
-
-To publish an environment file, navigate to your project directory. `envo push` requires two files:
-
-1. `.env`: The secret environment key-value pairs you want to share.
-2. `.env-share`: A file containing a comma-separated list of recipient public keys (`npub...` or hex) allowed to decrypt the secrets.
-
-Example `.env-share`:
-```text
-npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
-npub1yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-```
-
-Publish the secrets under a specific tag:
-
+### Push Secrets
 ```sh
 envo push <tag>
 ```
+Encrypts `.env` for all keys in `.env-share` and broadcasts to Nostr relays.
 
 Example:
 ```sh
 envo push my-project-staging
 ```
 
-`envo` encrypts the `.env` content individually for each key listed in `.env-share` (as well as your own key) and broadcasts the encrypted payload to Nostr relays.
-
----
-
-### Pulling Secrets
-
-To fetch and decrypt secrets published under a tag:
-
+### Pull Secrets
 ```sh
 envo pull <tag> --owner <owner-npub>
 ```
-
-- `--owner <owner-npub>`: The public key (`npub...`) of the trusted publisher for this tag. **Required on the first pull** for a tag to pin the trusted owner.
+Decrypts secrets published under the specified tag. First-time use requires `--owner` to establish trust.
 
 Example:
 ```sh
 envo pull my-project-staging --owner npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Once an owner is pinned for a tag, subsequent pulls for that tag no longer require the `--owner` argument:
-
-```sh
-envo pull my-project-staging
-```
-
-When pulled successfully, `envo` decrypts the content and writes it directly to `.env` in your current working directory.
+Subsequent pulls for the same tag don't need `--owner` after initial verification.
 
 ---
 
-## Project & Storage Structure
+## File Structure
 
-### Project Files
+- **Project Files**
+  - `.env`: Secrets to share
+  - `.env-share`: Authorized recipients list
 
-- `.env`: Source secret file containing line-separated key-value pairs.
-- `.env-share`: Comma-separated list of authorized Nostr public keys (`npub...`).
-
-### Global Configuration (`~/.envo/`)
-
-- `~/.envo/keys.json`: Stores your Nostr keypair (`npub` and `nsec`).
-- `~/.envo/trusted_owners.json`: Maps tag names to pinned owner public keys (`{ "tag": "npub..." }`).
+- **Global Configuration**
+  - `~/.envo/keys.json`: Nostr keypair storage
+  - `~/.envo/trusted_owners.json`: Tag-to-owner trust mapping
 
 ---
 
 ## Default Relays
 
-`envo` publishes and fetches events using the following Nostr relays:
-
+Events are published to and fetched from these relays by default:
 - `wss://relay.damus.io`
 - `wss://nos.lol`
 - `wss://purplepag.es`
