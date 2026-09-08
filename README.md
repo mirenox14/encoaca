@@ -1,20 +1,16 @@
-# encoaca
+# envo
 
-`envo` encrypts local environment variables and publishes them to Nostr relays under named tags. It is for individuals and small teams who need to share secrets without a central server.
+`envo` encrypts local environment variables and publishes them to Nostr relays under named tags. It is designed for individuals and small teams who need to share secrets without a central server.
 
 ## Table of Contents
 
-- Description
-- Features
-- Requirements
-- Installation
-- Usage
-- Project Structure
-- Tests
-
-## Description
-
-`envo` reads `.env` and `.env-share` from the current directory, encrypts the contents for each recipient listed in `.env-share`, and publishes the encrypted payload as a Nostr event under a tag you specify. To retrieve secrets, you run `envo pull` with a tag, which fetches and decrypts the matching event using your Nostr identity.
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [CLI Reference](#cli-reference)
+- [Project Structure](#project-structure)
+- [Tests](#tests)
 
 ## Features
 
@@ -35,61 +31,63 @@ Download the prebuilt binary for your platform from the [kaihere14/climenv](http
 
 ### Linux
 
-```
+```bash
 curl -fsSL https://github.com/kaihere14/climenv/releases/latest/download/envo-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C ~/.local/bin
 ```
 
 ### macOS
 
-```
+```bash
 curl -fsSL https://github.com/kaihere14/climenv/releases/latest/download/envo-x86_64-apple-darwin.tar.gz | tar -xz -C ~/.local/bin
 ```
 
 ### Windows
 
-```
+```powershell
 irm https://raw.githubusercontent.com/kaihere14/climenv/main/install.ps1 | iex
 ```
 
-Alternatively, install from source:
+### From Source
 
-```
+```bash
 cargo install --git https://github.com/kaihere14/climenv
 ```
 
 ## Usage
 
-### Generate an identity
+### Generate an Identity
 
-```
+```bash
 envo keygen
 ```
 
-This creates `~/.envo/keys.json` if one does not exist. Re-running the command reports the existing identity.
+This generates `~/.envo/keys.json` if it does not exist. Re-running the command reports the existing identity.
 
-### Publish secrets
+### Publish Secrets
 
-1. Create `.env` with the secrets to share.
-2. Create `.env-share` with one Nostr `npub` per line.
+1. Create a `.env` file containing the secrets to share.
+2. Create a `.env-share` file containing recipient Nostr `npub` keys, one per line.
 3. Run:
 
-```
+```bash
 envo push <tag>
 ```
 
-The first time you push a tag, you must specify the owner of the tag with `--owner <npub>` when pulling. The owner is remembered in `~/.envo/trusted_owners.json`.
+`envo` reads `.env` and `.env-share` from the current directory, encrypts the contents for each recipient listed in `.env-share`, and publishes the encrypted payload as a Nostr event under the specified tag.
 
-### Retrieve secrets
+### Retrieve Secrets
 
-```
+```bash
 envo pull <tag> --owner <npub>
 ```
 
-The `--owner` flag is required the first time you pull a tag. Subsequent pulls for the same tag use the stored owner. If no owner is stored, the command fails and asks for `--owner`.
+`envo` fetches and decrypts the matching event for the specified tag using your Nostr identity and writes the output to `.env`. 
 
-### CLI reference
+The `--owner` flag is required the first time you pull a tag. The tag owner is remembered in `~/.envo/trusted_owners.json`, so subsequent pulls for the same tag use the stored owner automatically. If no owner is stored, the command fails and prompts for `--owner`.
 
-```
+## CLI Reference
+
+```text
 envo [COMMAND]
 
 Commands:
@@ -101,7 +99,7 @@ Commands:
 ## Project Structure
 
 | File | Purpose |
-|------|---------|
+| --- | --- |
 | `main.rs` | CLI parsing, command dispatch, and top-level error handling. |
 | `key_gen.rs` | Identity generation, storage, and retrieval in `~/.envo/keys.json`. |
 | `key_valid.rs` | Validation of Nostr keypairs and permission restriction for the envo directory and key file. |
@@ -123,6 +121,6 @@ Commands:
 
 Run the test suite with:
 
-```
+```bash
 cargo test
 ```
