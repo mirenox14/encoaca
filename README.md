@@ -27,7 +27,7 @@
 
 ## Installation
 
-Download prebuilt binaries from the [kaihere14/climenv](https://github.com/kaihere14/climenv) GitHub releases page or install from source.
+Download prebuilt binaries from the [kaihere14/climenv releases page](https://github.com/kaihere14/climenv) or install from source.
 
 ### Linux
 
