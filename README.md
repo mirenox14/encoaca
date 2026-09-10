@@ -57,7 +57,7 @@ cargo install --git https://github.com/kaihere14/climenv
 
 ### Generate an Identity
 
-Run `keygen` to create a local identity:
+Run `envo keygen` to create a local identity:
 
 ```bash
 envo keygen
@@ -69,7 +69,7 @@ This creates `~/.envo/keys.json` if it does not exist. Re-running the command di
 
 1. Create a `.env` file containing the secrets to share.
 2. Create a `.env-share` file containing recipient Nostr `npub` keys, one per line.
-3. Run:
+3. Run `envo push`:
 
 ```bash
 envo push <tag>
@@ -79,7 +79,7 @@ envo push <tag>
 
 ### Retrieve Secrets
 
-To fetch and decrypt secrets for a tag:
+To fetch and decrypt secrets for a tag, run:
 
 ```bash
 envo pull <tag> --owner <npub>
