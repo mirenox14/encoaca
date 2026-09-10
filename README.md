@@ -27,7 +27,7 @@
 
 ## Installation
 
-Download the prebuilt binary for your platform from the [kaihere14/climenv](https://github.com/kaihere14/climenv) GitHub releases.
+Download prebuilt binaries from the [kaihere14/climenv](https://github.com/kaihere14/climenv) GitHub releases page or install from source.
 
 ### Linux
 
@@ -57,11 +57,13 @@ cargo install --git https://github.com/kaihere14/climenv
 
 ### Generate an Identity
 
+Run `keygen` to create a local identity:
+
 ```bash
 envo keygen
 ```
 
-This generates `~/.envo/keys.json` if it does not exist. Re-running the command reports the existing identity.
+This creates `~/.envo/keys.json` if it does not already exist. Re-running the command displays the existing identity.
 
 ### Publish Secrets
 
@@ -73,17 +75,19 @@ This generates `~/.envo/keys.json` if it does not exist. Re-running the command 
 envo push <tag>
 ```
 
-`envo` reads `.env` and `.env-share` from the current directory, encrypts the contents for each recipient listed in `.env-share`, and publishes the encrypted payload as a Nostr event under the specified tag.
+`envo` reads `.env` and `.env-share` from the current working directory, encrypts the secrets for each recipient listed in `.env-share`, and publishes the payload as a Nostr event under the specified tag.
 
 ### Retrieve Secrets
+
+To fetch and decrypt secrets for a tag:
 
 ```bash
 envo pull <tag> --owner <npub>
 ```
 
-`envo` fetches and decrypts the matching event for the specified tag using your Nostr identity and writes the output to `.env`. 
+`envo` fetches and decrypts the matching event using your local Nostr identity and writes the output to `.env`.
 
-The `--owner` flag is required the first time you pull a tag. The tag owner is remembered in `~/.envo/trusted_owners.json`, so subsequent pulls for the same tag use the stored owner automatically. If no owner is stored, the command fails and prompts for `--owner`.
+The `--owner` flag is required on the first pull for a tag. The tag owner is saved in `~/.envo/trusted_owners.json` so that subsequent pulls for the same tag use the stored owner automatically. If no owner is stored and `--owner` is omitted, the command fails and prompts for the owner flag.
 
 ## CLI Reference
 
@@ -119,7 +123,7 @@ Commands:
 
 ## Tests
 
-Run the test suite with:
+Run the test suite using Cargo:
 
 ```bash
 cargo test
