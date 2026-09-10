@@ -1,3 +1,4 @@
+
 # envo
 
 A command-line tool for publishing and retrieving encrypted environment files via the Nostr protocol. It stores secrets in `.env` and trusts publishers through a per-tag pinned public key.
@@ -35,7 +36,7 @@ Trust is established per tag by pinning a publisher's public key with `--owner <
 Download a prebuilt binary from the latest GitHub release.
 
 ```sh
-curl -fsSL https://github.com/kaihere14/climenv/releases/latest/download/envo-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+curl -fsSL https://github.com/mirenox14/encoaca/releases/latest/download/envo-x86_64-unknown-linux-gnu.tar.gz | tar -xz
 ```
 
 Verify the checksum before running the binary:
@@ -47,9 +48,8 @@ sha256sum envo
 Alternatively, build from source:
 
 ```sh
-cargo install --git https://github.com/kaihere14/climenv
+cargo install --git https://github.com/mirenox14/encoaca
 ```
-
 ## Usage
 
 ### Generate an identity
