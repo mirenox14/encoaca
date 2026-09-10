@@ -11,7 +11,6 @@ A command-line tool for publishing and retrieving encrypted environment files vi
 - Usage
 - Project Structure
 - Tests
-
 ## Description
 
 `envo` manages secrets through Nostr tags. Publish a tagged set of environment variables with `envo push <tag>`, and retrieve them on another machine with `envo pull <tag>`.
