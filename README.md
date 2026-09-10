@@ -14,9 +14,9 @@
 
 ## Features
 
-- Generate and manage a local Nostr identity with `envo keygen`.
-- Encrypt and publish environment secrets to Nostr relays under a tag with `envo push <tag>`.
-- Fetch and decrypt secrets for a tag from Nostr relays with `envo pull <tag> [--owner <npub>]`.
+- Generate and manage a local Nostr identity using `envo keygen`.
+- Encrypt and publish environment secrets to Nostr relays under a tag using `envo push <tag>`.
+- Fetch and decrypt secrets for a tag from Nostr relays using `envo pull <tag> [--owner <npub>]`.
 - Restrict key files and the configuration directory to owner-only access.
 - Pin a trusted Nostr pubkey per tag to prevent unauthorized secret retrieval.
 
@@ -63,7 +63,7 @@ Run `keygen` to create a local identity:
 envo keygen
 ```
 
-This creates `~/.envo/keys.json` if it does not already exist. Re-running the command displays the existing identity.
+This creates `~/.envo/keys.json` if it does not exist. Re-running the command displays the existing identity.
 
 ### Publish Secrets
 
@@ -87,7 +87,7 @@ envo pull <tag> --owner <npub>
 
 `envo` fetches and decrypts the matching event using your local Nostr identity and writes the output to `.env`.
 
-The `--owner` flag is required on the first pull for a tag. The tag owner is saved in `~/.envo/trusted_owners.json` so that subsequent pulls for the same tag use the stored owner automatically. If no owner is stored and `--owner` is omitted, the command fails and prompts for the owner flag.
+The `--owner` flag is required on the first pull for a tag. The tag owner is saved in `~/.envo/trusted_owners.json` so subsequent pulls for the same tag use the stored owner automatically. If no owner is stored and `--owner` is omitted, the command fails and prompts for the owner flag.
 
 ## CLI Reference
 
