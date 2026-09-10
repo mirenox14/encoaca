@@ -14,16 +14,16 @@
 
 ## Features
 
-- Generate and manage a local Nostr identity using `envo keygen`.
-- Encrypt and publish environment secrets to Nostr relays under a tag using `envo push <tag>`.
-- Fetch and decrypt secrets for a tag from Nostr relays using `envo pull <tag> [--owner <npub>]`.
-- Restrict key files and the configuration directory to owner-only access.
-- Pin a trusted Nostr pubkey per tag to prevent unauthorized secret retrieval.
+- **Identity Management:** Generate and manage a local Nostr identity using `envo keygen`.
+- **Secret Publishing:** Encrypt and publish environment secrets to Nostr relays under a tag using `envo push <tag>`.
+- **Secret Retrieval:** Fetch and decrypt secrets for a tag from Nostr relays using `envo pull <tag> [--owner <npub>]`.
+- **Access Control:** Restrict key files and the configuration directory to owner-only access.
+- **Key Pinning:** Pin a trusted Nostr pubkey per tag to prevent unauthorized secret retrieval.
 
 ## Requirements
 
-- A working installation of Rust and Cargo.
-- Network access to at least one Nostr relay.
+- A working installation of Rust and Cargo
+- Network access to at least one Nostr relay
 
 ## Installation
 
@@ -57,7 +57,7 @@ cargo install --git https://github.com/kaihere14/climenv
 
 ### Generate an Identity
 
-Run `envo keygen` to create a local identity:
+Create or inspect a local identity:
 
 ```bash
 envo keygen
@@ -69,7 +69,7 @@ This creates `~/.envo/keys.json` if it does not exist. Re-running the command di
 
 1. Create a `.env` file containing the secrets to share.
 2. Create a `.env-share` file containing recipient Nostr `npub` keys, one per line.
-3. Run `envo push`:
+3. Publish the payload:
 
 ```bash
 envo push <tag>
@@ -79,7 +79,7 @@ envo push <tag>
 
 ### Retrieve Secrets
 
-To fetch and decrypt secrets for a tag, run:
+Fetch and decrypt secrets for a tag:
 
 ```bash
 envo pull <tag> --owner <npub>
