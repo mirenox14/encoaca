@@ -4,7 +4,6 @@ A command-line tool for publishing and retrieving encrypted project secrets over
 
 ## Table of Contents
 
-- [Description](#description)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -12,10 +11,6 @@ A command-line tool for publishing and retrieving encrypted project secrets over
 - [Project Structure](#project-structure)
 - [Tests](#tests)
 - [Limitations](#limitations)
-
-## Description
-
-`envo` stores secrets in `.env` and distributes them via Nostr relays under user-defined tags. Recipients listed in `.env-share` are encrypted using NIP-44. You identify yourself with a local Nostr keypair and pin a trusted owner per tag before pulling secrets.
 
 ## Features
 
