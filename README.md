@@ -4,17 +4,18 @@ A command-line tool for publishing and retrieving encrypted project secrets over
 
 ## Table of Contents
 
-- Description
-- Features
-- Requirements
-- Installation
-- Usage
-- Project Structure
-- Tests
+- [Description](#description)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Tests](#tests)
+- [Limitations](#limitations)
 
 ## Description
 
-`envo` stores secrets in `.env` and distributes them via Nostr relays under user-defined tags. Recipients listed in `.env-share` are encrypted for using NIP-44. You identify yourself with a local Nostr keypair and pin a trusted owner per tag before pulling secrets.
+`envo` stores secrets in `.env` and distributes them via Nostr relays under user-defined tags. Recipients listed in `.env-share` are encrypted using NIP-44. You identify yourself with a local Nostr keypair and pin a trusted owner per tag before pulling secrets.
 
 ## Features
 
@@ -89,7 +90,7 @@ This fetches the event from relays, decrypts the entry addressed to you, and wri
 
 ## Project Structure
 
-```
+```text
 ├── env_files.rs      # Reads .env and .env-share from the current directory.
 ├── event_content.rs  # Defines the JSON structure of encrypted event content.
 ├── helper.rs         # Module declarations.
